@@ -34,6 +34,14 @@ class Grafopai {
     }
 
     // adicionar função de exibição do pedágio
+    exibicao() {
+        for (const [cidade, informacoes] of this.vert) {
+            console.log(`${cidade} (Pedágio total: R$${informacoes.custopedagio}) ->`);
+            for (const [vizinhoselecionado, distancia] of informacoes.vizinhanca) {
+                console.log(`   - ${vizinhoselecionado} (${distancia} km)`);
+            }
+        }
+    }
 }
 
 module.exports = Grafopai;
