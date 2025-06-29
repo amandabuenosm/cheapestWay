@@ -41,6 +41,19 @@ function codeDijkstra(grafofilho, origem, destino, precogasolina, autonomia) {
     }
 
     // criar o caminho final
+    const percurso = [];
+    let atual = destino;
+
+    if (listadistancias.get(destino) === Infinity) {
+        return { percurso: [], custoAcalcular: Infinity };
+    }
+
+    while (atual) {
+        percurso.unshift(atual);
+        atual = nosAnteriores.get(atual);
+    }
+
+    return { percurso, custoAcalcular: listadistancias.get(destino) };
 }
 
 module.exports = codeDijkstra;
