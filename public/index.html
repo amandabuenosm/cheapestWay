@@ -1,1 +1,36 @@
-// index.html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cheapest Way</title>
+</head>
+<body>
+  <div class="container">
+    <h1>Inicializador de cálculos de rotas mais baratas entre cidades</h1>
+    <form id="formulario-rotas">
+      <label>Cidade de Origem:
+        <input type="text" id="origem" list="capitais" required />
+      </label>
+
+      <label>Cidade de Destino:
+        <input type="text" id="destino" list="capitais" required />
+      </label>
+
+      <label>Preço do Combustível (R$/L):
+        <input type="number" id="precoComb" required />
+      </label>
+
+      <label>Autonomia (Km/L):
+        <input type="number" id="autonomia" required />
+      </label>
+
+      <button type="calc">Calcular</button>
+    </form>
+
+    <datalist id="capitais"></datalist>
+
+  </div>
+
+</body>
+</html>
