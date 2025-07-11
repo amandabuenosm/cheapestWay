@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <link href="https://fonts.googleapis.com/css2?family=Amarante&family=Viaoda+Libre:wght@400&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/608/608769.png" />
+  <title>Cheapest Way</title>
+  <link rel="stylesheet" href="./styles.css" />
+ 
+</head>
+<body>
+  <div class="container">
+    <h1>Inicializador de cálculos de rotas mais baratas entre cidades</h1>
+    <form id="formulario-rotas">
+      <label>Cidade de Origem:
+        <input type="text" id="origem" list="capitais" required />
+      </label>
+
+      <label>Cidade de Destino:
+        <input type="text" id="destino" list="capitais" required />
+      </label>
+
+      <label>Preço do Combustível (R$/L):
+        <input type="number" id="precoComb" step="0.01" required />
+      </label>
+
+      <label>Autonomia (Km/L):
+        <input type="number" id="autonomia" required />
+      </label>
+
+      <button id="submit">Calcular</button>
+    </form>
+
+    <datalist id="capitais"></datalist>
+
+    <div id="resultFormula"></div>
+  </div>
+
+  <script src="./scripts.js"></script>
+</body>
+</html>
