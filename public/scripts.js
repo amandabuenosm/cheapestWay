@@ -27,6 +27,7 @@ document.getElementById('formulario-rotas').addEventListener('submit', async (e)
     const dados = await res.json();
     const result = document.getElementById('resultFormula');
 
+    // carregar resultados no próprio HTML
     if (!dados.percurso || dados.percurso.length < 2) {
         result.innerHTML = '<p class="error">Rota Inexistente</p>';
     } else {
