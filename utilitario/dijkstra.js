@@ -1,60 +1,50 @@
 const PrioridadeDaFila = require('./ordem');
 
-function calculoCustoViagem(distancia, precogasolina, autonomia, pedagio) {
-    const custogasolina = (distancia / autonomia) * precogasolina;
-    return custogasolina + pedagio;
-}
-
-function codeDijkstra(grafofilho, origem, destino, precogasolina, autonomia) {
+function menorCaminho(grafo, pedagio, origem, destino, precogasolina, autonomia) {
     const listadistancias = new Map();
     const nosAnteriores = new Map();
     const nosVisitados = new Set();
     const fila = new PrioridadeDaFila();
 
-    // iniciar distâncias
-    for (const cidade of grafofilho.vert.keys()) {
+    for (const cidade of grafo.keys()) {
         listadistancias.set(cidade, Infinity);
-        nosAnteriores.set(cidade, null);
     }
-
     listadistancias.set(origem, 0);
     fila.enfileirar(origem, 0);
 
-    while(!fila.filavazia()) {
+    while (!fila.filavazia()) {
         const noAtual = fila.desenfileirar();
+
         if (nosVisitados.has(noAtual)) continue;
         nosVisitados.add(noAtual);
 
-        if (!grafofilho.vert.has(noAtual)) continue;
-        const { vizinhos } = grafofilho.vert.get(noAtual);
+        if (noAtual === destino) break;
 
-        for (const [vizinho, distancia] of vizinhos) {
-            const custoAcalcular = calculoCustoViagem(distancia, precogasolina, autonomia, grafofilho.vert.get(noAtual).pedagio);
+        for (let vizinho of grafo.get(noAtual)) {
+            const valorGasolina = (vizinho.distancia / autonomia) * precogasolina;
+            const pedagioIntermediario = pedagio.get(vizinho.destino) || 0;
+            const novoCusto = listadistancias.get(noAtual) + valorGasolina + pedagioIntermediario;
 
-            const novadistancia = listadistancias.get(noAtual) + custoAcalcular;
-
-            if (novadistancia < listadistancias.get(vizinho)) {
-                listadistancias.set(vizinho, novadistancia);
-                nosAnteriores.set(vizinho, noAtual);
-                fila.enfileirar(vizinho, novadistancia);
+            if (novoCusto < listadistancias.get(vizinho.destino)) {
+                listadistancias.set(vizinho.destino, novoCusto);
+                nosAnteriores.set(vizinho.destino, noAtual);
+                fila.enfileirar(vizinho.destino, novoCusto);
             }
         }
     }
 
-    // criar o caminho final
-    const percurso = [];
-    let atual = destino;
-
-    if (listadistancias.get(destino) === Infinity) {
-        return { percurso: [], custoAcalcular: Infinity };
+    if (!nosAnteriores.has(destino)) {
+        return { percurso: [], custo: Infinity };
     }
 
+    let percurso = [];
+    let atual = destino;
     while (atual) {
         percurso.unshift(atual);
         atual = nosAnteriores.get(atual);
     }
 
-    return { percurso, custoAcalcular: listadistancias.get(destino) };
+    return { percurso, custo: listadistancias.get(destino), nosAnteriores };
 }
 
-module.exports = codeDijkstra;
+module.exports = menorCaminho;

@@ -25,15 +25,15 @@ document.getElementById('formulario-rotas').addEventListener('submit', async (e)
     });
 
     const dados = await res.json();
-    console.log(dados);
     const result = document.getElementById('resultFormula');
 
-    if (dados.percurso.length === 0) {
+    if (!dados.percurso || dados.percurso.length < 2) {
         result.innerHTML = '<p class="error">Rota Inexistente</p>';
     } else {
         result.innerHTML = `
             <p><strong>Rota: </strong> ${dados.percurso.join(' => ')}</p>
-            <p><strong>Custo Total da Viagem: </strong> ${dados.custoAcalcular.toFixed(2)}</p>
+            <p><strong>Pedágio Total </strong> ${dados.pedagioTotal.toFixed(2)}</p>
+            <p><strong>Custo Total da Viagem: </strong> ${dados.total.toFixed(2)}</p>
         `;
     }
 });
